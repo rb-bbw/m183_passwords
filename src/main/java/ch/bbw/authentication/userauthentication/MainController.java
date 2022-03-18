@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -18,21 +17,20 @@ public class MainController {
     }
 
     @PostMapping("/signIn")
-    public String signIn(@ModelAttribute AuthenticationData authenticationData,
-                         Model model) {
+    public String signIn(@ModelAttribute AuthenticationData authenticationData, Model model) {
         String localUsername = "admin";
-        String localPassword = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413";
+        String localPassword = "de1e0b5f43273c95f6c8206694948f578566e9dfb0c3b8be75ce9ef8bc616d74ed8e0356ddac384b4c70f5098b76e3886bf5912d433bea7c20150c1fddb208b2";
+        // GH5&7Uh6*4g
 
-        // Todo: hier Zugangsdaten prüfen
-        // Hash vom Passwort erzeugen und mit lokalem Hash vergleichen
-        // wenn Hashes gleich auf die Seite "success" wechseln
-        // sonst auf die Seite index wechseln
-        System.out.println(authenticationData.getUsername());
+        HashGenerator hasher = new HashGenerator();
+        String uname = authenticationData.getUsername();
+        String pw = hasher.generateSHA512Hash(authenticationData.getPassword());
 
-        // Fall: Benutzer korrekt authentifiziert
-        //model.addAttribute("authenticationData", new AuthenticationData());
-        //model.addAttribute("message", "");
-        //return "success";
+        if(pw.equals(localPassword) && uname.equals(localUsername)) {
+            model.addAttribute("authenticationData", new AuthenticationData());
+            model.addAttribute("message", "");
+            return "success";
+        }
 
         // im Fehlerfall
         model.addAttribute("authenticationData", new AuthenticationData());
