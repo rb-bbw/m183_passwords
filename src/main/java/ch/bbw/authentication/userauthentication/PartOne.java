@@ -1,11 +1,13 @@
 package ch.bbw.authentication.userauthentication;
 
-import java.util.Random;
-
 public class PartOne {
     public static void main(String[] args) {
-        System.out.println(generatePWFromPhrase("This is eine 123 Tst @Prh 123"));
+        HashGenerator hasher = new HashGenerator();
+        System.out.println(hasher.generateSHA256Hash("GH5&7Uh6*4g"));
+        System.out.println(hasher.generateSHA512Hash("GH5&7Uh6*4g"));
     }
+
+    // functions of part one below
     private static String getRandomPW(int length) {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890+*%&/()=?@";
         int charLen = chars.length();
